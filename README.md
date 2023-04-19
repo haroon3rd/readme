@@ -56,7 +56,7 @@ This toolkit allows you to connect the container engine to the bare metal machin
 
     * decompress the `data.tar.gz`: `tar -xvzf data.tar.gz`. After this step, make sure we have 4 items in the current directory: `data`, `model`, and `EMSAssist` folder and a file 'docker-compose.yml'. Also make sure there are 3 folders under `EMSAssist` directory: `src`, `examples`, and `init_models`.
 
-5. Run docker-compose in silent mode from the terminal of current folder. For the next step, `data`, `model`, and `EMSAssist` directories along with the `docker-compose.yml` file needs to be in the same folder (i.e., current folder):
+5. Run docker-compose in silent mode from the terminal of current folder. For the next step, `data`, `model`, and `EMSAssist` directories along with the `docker-compose.yml` file need to be in the same folder (i.e., current folder):
 	```
     $ docker-compose up -d
 	# it will pull a docker container image and run it in local machine as "emsassist"
