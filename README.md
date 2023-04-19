@@ -59,7 +59,7 @@ This toolkit allows you to connect the container engine to the bare metal machin
 5. Run docker-compose in silent mode from the terminal of current folder. For the next step, `data`, `model`, and `EMSAssist` directories along with the `docker-compose.yml` file needs to be in the same folder (i.e., current folder):
 	```
     $ docker-compose up -d
-	# it will pull a docker container image and run it in locally as "emsassist"
+	# it will pull a docker container image and run it in local machine as "emsassist"
     ```
 
 6. Log in to your running container's terminal (bash)
