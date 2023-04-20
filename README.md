@@ -175,28 +175,28 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
     * decompress the `data.tar.gz`: `tar -xvzf data.tar.gz`. After this step, make sure we have 4 items in the current directory: `data`, `model`, and `EMSAssist` folder and a file 'docker-compose.yml'. Also make sure there are 3 folders under `EMSAssist` directory: `src`, `examples`, and `init_models`.
 
 	* Make sure `docker-compose.yml` has the following content in it:
-	```yml
+	```yaml
 	version: '3.7'
 
 	services:
 	  emsassist:
-		image: haroon3rd/anaconda3:nvidia-v1
-		  container_name: emsassist
-		  volumes:
-			- ./data:/home/EMSAssist-artifact-evaluation/data
+        image: haroon3rd/anaconda3:nvidia-v1
+          container_name: emsassist
+          volumes:
+            - ./data:/home/EMSAssist-artifact-evaluation/data
 			- ./model:/home/EMSAssist-artifact-evaluation/model
 			- ./EMSAssist:/home/EMSAssist-artifact-evaluation/EMSAssist
 		  #command: [/bin/bash -c "tail -f /dev/null"]
 		  command: tail -F anything
 		  #network_mode: "host"
 		  deploy:
-			resources:
-	    	  reservations:
-				devices:
+		    resources:
+			  reservations:
+			    devices:
 				  - driver: nvidia
 				    capabilities: [gpu]
-	volumes:
-	  emsassist: {}
+    volumes:
+      emsassist: {}
 	```
 
 6. Clone the git repository of EMSAssist:
