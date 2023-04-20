@@ -10,16 +10,18 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
 
 1. Install Docker
 	* Update and Install Docker:
-	```
+	```console
     $ sudo apt update
 	$ sudo apt-get install docker
 	```
+
 	* Test Docker installation: (should show docker.service details.)
-	``` 
+	```console 
     $ sudo systemctl status docker 
     ```
+	
 	* Perform post installation steps to avoid sudo
-	```
+	```console
     # Create the Docker group.
 	$ sudo groupadd docker
 	# Add your user to the Docker group
@@ -29,11 +31,11 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
     ```
 2. Build Docker image with all required packages. This step is optional as a ready image will be pulled in absence from Docker hub (step 7). This step involves manual installation of packages and rebuilding the image which will take some time.
 	* Create Dockerfile
-	```
+	```console
 	touch Dockerfile
 	```
 	* Edit Dockerfile with your preffered text editor and paste the following contents in Dockerfile then save it.
-	```
+	```yaml
 	#FROM ubuntu:22.04
 	FROM nvidia/cuda:12.0.1-base-ubuntu22.04
 	MAINTAINER "Amran Haroon"
@@ -101,20 +103,23 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
 	```
 
 	* Build Docker image and give it a name:
-	```
+	```console
 	$ docker build -t haroon3rd/anaconda3:base .
 	```
+	
 	* Make sure the image was created successfully
-	```
+	```console
 	$ docker image ls
 	```
+	
 	* Run Docker image with gpu enabled in silent mode and execute into terminal :
-	```
+	```console
 	$ docker run --gpus all -d -t --name base haroon3rd/anaconda3:base
 	$ docker exec -it base /bin/bash
 	```
+	
 	*  Install the required packages inside created conda environment:
-	```
+	```console
 	# Activate conda env 
 	$ conda activate emsassist-gpu
 	
@@ -136,12 +141,12 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
 	```
 
 	* Save this container (with changes) to a new image (may take up to 10 mins):
-	```
+	```console
 	$ docker commit base  haroon3rd/anaconda3:nvidia-v1
 	```
 
 	* Make sure you have a new image `haroon3rd/anaconda3:nvidia-v1`:
-	```
+	```console
 	$ docker image ls
 	```
 
@@ -200,7 +205,7 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
 	```
 
 6. Clone the git repository of EMSAssist:
-	```
+	```console
 	$ git clone --recursive git@github.com:LENSS/EMSAssist.git`
 	$ cd EMSAssist
 	$ git clone --recursive git@github.com:tensorflow/examples.git
@@ -219,21 +224,24 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
 Inside your container:
 
 9. Activate conda environment and run `nvidia-smi` to make sure the GPU is working:
-	```
+	```console
     $ conda activate emsassist-gpu
 	$ nvidia-smi
     ```
 
 
-## B. Path preparation
+## B. Path preparation and running the evaluation
 
-Before we proceed, please make sure you successfully set up the environment or get the Docker image running with `nvidia-smi`
+* Before we proceed, please make sure you successfully set up the environment or get the Docker image running with `nvidia-smi`
 
-* `export PYTHONPATH=$PWD/src/speech_recognition:$PWD/examples`
+	```console
+	$ export PYTHONPATH=$PWD/src/speech_recognition:$PWD/examples`
 
-* `export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH`
+	$ export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH`
 
-* begin the evaluation: `cd src`. Check out the README file when you enter each sub-directory.
+	# begin the evaluation: 
+	$ cd src
+	# Check out the README file when you enter each sub-directory.
 
 
 <!-- we create and activate a conda environment with tensorflow-gpu: `conda activate tf-gpu` -->
