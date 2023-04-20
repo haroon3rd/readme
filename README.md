@@ -35,7 +35,7 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
 	touch Dockerfile
 	```
 	* Edit Dockerfile with your preffered text editor and paste the following contents in Dockerfile then save it.
-	```yaml
+	```dockerfile
 	#FROM ubuntu:22.04
 	FROM nvidia/cuda:12.0.1-base-ubuntu22.04
 	MAINTAINER "Amran Haroon"
