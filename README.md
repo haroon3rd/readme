@@ -184,17 +184,17 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
           container_name: emsassist
           volumes:
             - ./data:/home/EMSAssist-artifact-evaluation/data
-			- ./model:/home/EMSAssist-artifact-evaluation/model
-			- ./EMSAssist:/home/EMSAssist-artifact-evaluation/EMSAssist
-		  #command: [/bin/bash -c "tail -f /dev/null"]
-		  command: tail -F anything
-		  #network_mode: "host"
-		  deploy:
-		    resources:
-			  reservations:
-			    devices:
-				  - driver: nvidia
-				    capabilities: [gpu]
+            - ./model:/home/EMSAssist-artifact-evaluation/model
+            - ./EMSAssist:/home/EMSAssist-artifact-evaluation/EMSAssist
+          #command: [/bin/bash -c "tail -f /dev/null"]
+          command: tail -F anything
+          #network_mode: "host"
+          deploy:
+            resources:
+              reservations:
+                devices:
+                  - driver: nvidia
+                    capabilities: [gpu]
     volumes:
       emsassist: {}
 	```
