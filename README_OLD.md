@@ -27,7 +27,7 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
 	# Activate the changes to groups
 	$ newgrp docker
     ```
-2. Build Docker image with all required packages. This step is optional as a ready image will be pulled in absence from docker hub (step 7). This step involves manual installation of packages and rebuilding the image which will take some time.
+2. Build Docker image with all required packages (Optional)
 	* Create Dockerfile
 	```
 	touch Dockerfile
@@ -168,7 +168,7 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
     # Restart docker engine
 	$ systemctl restart docker
     ```
-5. Download the [data.tar.gz](https://drive.google.com/file/d/1Li-oA6ZfuHx2EbqGWbhK-sZvwgnHVJs9/view?usp=share_link), [model.tar.gz](https://drive.google.com/file/d/12LOuUl__T-oVMBQRLd8p7m27AiepQrSR/view?usp=share_link) and [docker-compose.yml](https://drive.google.com/file/d/12LOuUl__T-oVMBQRLd8p7m27AiepQrSR/view?usp=share_link) files from Google Drive to the cuurent working (i.e., ./home) folder. We expect the downloading and decompressing to take 2-3 hours.
+5.  Download the [data.tar.gz](https://drive.google.com/file/d/1Li-oA6ZfuHx2EbqGWbhK-sZvwgnHVJs9/view?usp=share_link), [model.tar.gz](https://drive.google.com/file/d/12LOuUl__T-oVMBQRLd8p7m27AiepQrSR/view?usp=share_link) and [docker-compose.yml](https://drive.google.com/file/d/12LOuUl__T-oVMBQRLd8p7m27AiepQrSR/view?usp=share_link) files from Google Drive to the cuurent working (i.e., ./home) folder. We expect the downloading and decompressing to take 2-3 hours.
 
     * decompress the `model.tar.gz`: `tar -xvzf model.tar.gz`
 
@@ -199,33 +199,61 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
 		emsassist: {}
 	```
 
-6. Clone the git repository of EMSAssist:
-	```
-	$ git clone --recursive git@github.com:LENSS/EMSAssist.git`
-	$ cd EMSAssist
-	$ git clone --recursive git@github.com:tensorflow/examples.git
-	```
-
-7. Run docker-compose in silent mode from the terminal of current folder. For the next step, `data`, `model`, and `EMSAssist` directories along with the `docker-compose.yml` file need to be in the same folder (i.e., current folder):
+6. Run docker-compose in silent mode from the terminal of current folder. For the next step, `data`, `model`, and `EMSAssist` directories along with the `docker-compose.yml` file need to be in the same folder (i.e., current folder):
 	```
     $ docker-compose up -d
 	# it will pull a docker container image and run it in local machine as "emsassist"
     ```
 
-8. Log in to your running container's terminal (bash)
+7. Log in to your running container's terminal (bash)
 	```
     $ docker exec -it emsassist /bin/bash
     ```
 Inside your container:
 
-9. Activate conda environment and run `nvidia-smi` to make sure the GPU is working:
+8. Activate conda environment:
 	```
     $ conda activate emsassist-gpu
-	$ nvidia-smi
     ```
 
+9. Now follow the instructions in section 'D. Path preparation'   
 
-## B. Path preparation
+
+## B. Preparing Local Environment (for using bare metal machine)
+Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04. 
+First of all, we download anaconda for smoother artifact evaluation
+
+* Download Anaconda installer: `wget https://repo.anaconda.com/archive/Anaconda3-2023.03-Linux-x86_64.sh`
+
+* Run the installer: `bash Anaconda3-2023.03-Linux-x86_64.sh`. Keep pressing `Enter` or inputing `yes` on the command line
+
+* Create a conda environment for EMSAssist: `conda create -n emsassist-gpu pip python=3.7`
+
+* Activate the environment: `conda activate emsassist-gpu`
+
+* Install the XGBoost-GPU: `conda install py-xgboost-gpu`. This also installs the CudaToolkit: pkgs/main/linux-64::cudatoolkit-10.0.130-0 
+
+* Install the TensorFlow-2.9: `pip install tensorflow-gpu==2.9`
+
+* Install the CUDA ToolKit 11.0 and CuDNN 8.0: `conda install -c conda-forge cudatoolkit=11.0 cudnn`
+
+* Install the required python modules: `pip install -r requirements.txt`
+
+## C. Directory and files preparation:
+
+* `git clone --recursive git@github.com:LENSS/EMSAssist.git`
+
+* `cd EMSAssist`
+
+* `git clone --recursive git@github.com:tensorflow/examples.git`
+
+* Download the [data.tar.gz](https://drive.google.com/file/d/1Li-oA6ZfuHx2EbqGWbhK-sZvwgnHVJs9/view?usp=share_link) and [model.tar.gz](https://drive.google.com/file/d/12LOuUl__T-oVMBQRLd8p7m27AiepQrSR/view?usp=share_link) tar files from Google Drive to the cuurent EMSAssist folder. We expect the downloading and decompressing to take 2-3 hours.
+
+* decompress the `model.tar.gz`: `tar -xvzf model.tar.gz`
+
+* decompress the `data.tar.gz`: `tar -xvzf data.tar.gz`. After this step, make sure we have 5 folders under `EMSAssist` directory: `src`, `examples`, `data`, `init_models` and `model`.
+
+## D. Path preparation
 
 Before we proceed, please make sure you successfully set up the environment or get the Docker image running with `nvidia-smi`
 
