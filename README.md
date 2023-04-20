@@ -4,30 +4,30 @@ This repository currently contains the reproducible artifact for EMSAssist.
 
 ## A. Preparing Docker Environment (for using Docker)
 
-We follow the [official docker guide](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04) to install and run docker images:
+We follow the [official Docker guide](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04) to install and run Docker images:
 
 Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
 
-1. Install docker
+1. Install Docker
 	* Update and Install Docker:
 	```
     $ sudo apt update
 	$ sudo apt-get install docker
 	```
-	* Test docker installation: (should show docker.service details.)
+	* Test Docker installation: (should show docker.service details.)
 	``` 
     $ sudo systemctl status docker 
     ```
 	* Perform post installation steps to avoid sudo
 	```
-    # Create the docker group.
+    # Create the Docker group.
 	$ sudo groupadd docker
-	# Add your user to the docker group
+	# Add your user to the Docker group
 	$ sudo usermod -aG docker $USER
 	# Activate the changes to groups
 	$ newgrp docker
     ```
-2. Build Docker image with all required packages. This step is optional as a ready image will be pulled in absence from docker hub (step 7). This step involves manual installation of packages and rebuilding the image which will take some time.
+2. Build Docker image with all required packages. This step is optional as a ready image will be pulled in absence from Docker hub (step 7). This step involves manual installation of packages and rebuilding the image which will take some time.
 	* Create Dockerfile
 	```
 	touch Dockerfile
@@ -100,7 +100,7 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
 	CMD ["-f","/dev/null"]
 	```
 
-	* Build docker image and give it a name:
+	* Build Docker image and give it a name:
 	```
 	$ docker build -t haroon3rd/anaconda3:base .
 	```
@@ -108,7 +108,7 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
 	```
 	$ docker image ls
 	```
-	* Run docker image with gpu enabled in silent mode and execute into terminal :
+	* Run Docker image with gpu enabled in silent mode and execute into terminal :
 	```
 	$ docker run --gpus all -d -t --name base haroon3rd/anaconda3:base
 	$ docker exec -it base /bin/bash
@@ -151,7 +151,7 @@ Assuming NVIDIA GPUs present in the bare metal system running Ubuntu 22.04.
 	$ sudo apt-get install docker-compose 
     ```
 
-4. install nvidia docker tootlkit in local machine (requires docker dameon to reload).
+4. install nvidia container tootlkit in local machine (requires Docker dameon to reload).
 	This toolkit allows you to connect the container engine to the bare metal machine's nvidia driver.
 
 	```
